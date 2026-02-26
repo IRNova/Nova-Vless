@@ -187,21 +187,181 @@ SOCKS5=username:password@host:port
 
 ---
 
-## 📊 منابع IP
+## ⚡ تولید اشتراک بهینه
 
-### حالت محلی (Local)
-- از GitHub دریافت می‌شود:
-  - `cmliu/CF-CIDR` - IP های رسمی Cloudflare
-  - IP های اپراتورهای چین (CMCC, CU, CT)
+سیستم تولید اشتراک این پنل از **3 روش** مختلف پشتیبانی می‌کند:
 
-### حالت API خارجی
-- می‌توانید از API های مختلف استفاده کنید
-- در تنظیمات `SUB` وارد کنید
+### 🏠 روش ۱: حالت محلی (Local)
+این روش پیش‌فرض است و IP های Cloudflare را از GitHub دریافت می‌کند:
+- IP های رسمی Cloudflare (از IRNova/Tools)
+- پشتیبانی از اپراتورهای چین (CMCC, CU, CT)
+- تولید تصادفی IP از رنج‌های موجود
+- **نام نودها**: به صورت تصادفی با پیشوند `Nova-` و کد 5 کاراکتری
+
+### 🔗 روش ۲: حالت API خارجی (SUB Generator)
+استفاده از API های آماده برای دریافت اشتراک:
+- می‌توانید هر SUB API معتبر را وارد کنید
+- مثلاً: `https://subapi.example.com`
+- سیستم به طور خودکار لینک‌ها را پردازش می‌کند
+
+### 📝 روش ۳: IP های سفارشی (ADD.txt)
+افزودن IP های دستی:
+- در پنل admin بخش "IP های سفارشی"
+- یا فایل `ADD.txt` در KV
+- فرمت: `IP:پورت#نام|زمان|تاخیر`
+
+---
+
+## ⚙️ اطلاعات پیکربندی جزئی
+
+تنظیمات قابل تغییر در پنل:
+
+| تنظیم | قابل تغییر | توضیحات |
+|--------|-------------|----------|
+| پروتکل | ✅ | VLESS / Trojan |
+| نوع اتصال | ✅ | WebSocket / HTTP/2 / HTTP/3 |
+| مسیر | ✅ | مسیر دلخواه |
+| TLS | ✅ | فعال/غیرفعال |
+| Fingerprint | ✅ | chrome, firefox, safari, etc |
+| TLS Fragment | ✅ | اندازه و نوع |
+| ECH | ✅ | فعال/غیرفعال |
+| نام اشتراک | ✅ | متن دلخواه |
+| تعداد IP | ✅ | 1-100 |
+| پورت | ✅ | سفارشی |
+
+---
+
+## 🔐 Encrypted Client Hello (ECH)
+
+### ❓ ECH چیست؟
+
+**ECH (Encrypted Client Hello)** یک ویژگی جدید در پروتکل TLS است که اطلاعات حساس مانند SNI (نام سرور) را رمزنگاری می‌کند.
+
+### ⚠️ مشکل چیست؟
+
+در اتصالات معمولی WS + TLS:
+- ✅ محتوای ارتباط رمزنگاری شده
+- ❌ اما **SNI** (دامنه نود) به صورت plaintext ارسال می‌شود
+
+این یعنی GFW می‌داند به کدام دامنه متصل شده‌اید، حتی اگر محتوا را نبیند.
+
+### 💡 نقش ECH
+
+ECH با رمزنگاری SNI این مشکل را حل می‌کند:
+- ✅ GFW دیگر نمی‌تواند دامنه واقعی را ببیند
+- ✅ دامنه نمایش داده شده: `cloudflare-ech.com` (یکپارچه)
+- ✅ مسدودسازی دقیق دامنه غیرممکن می‌شود
+
+### 📱 کلاینت‌های پشتیبان:
+- v2rayN v7.17.0+
+- v2rayNG v2.0.0+
+- Clash.Meta (Mihomo)
+- Sing-box
+
+### 🌐 DNS های پشتیبانی شده:
+- Cloudflare DoH
+- Google DoH
+- Ali DoH
+- Tencent SM DoH
+- و دیگر DoH ها...
+
+---
+
+## 🌐 تنظیمات دسترسی Cloudflare CDN
+
+این بخش برای نمایش و مدیریت مصرف منابع Cloudflare استفاده می‌شود:
+
+### 📊 اطلاعات قابل نمایش:
+- **مصرف Workers** - تعداد درخواست‌ها
+- **مصرف Pages** - ترافیک Pages
+- **مجموع مصرف** - کل منابع استفاده شده
+- **سهمیه روزانه** - حد مجاز روزانه
+
+### 🔑 روش‌های دریافت اطلاعات:
+
+| روش | توضیحات | نیازمندی |
+|-----|---------|-----------|
+| API مستقیم | استفاده از Cloudflare API | Email + Global API Key |
+| Token | استفاده از API Token | Cloudflare API Token |
+| UsageAPI | استفاده از سرویس خارجی | آدرس UsageAPI |
+
+### ⚙️ فیلدهای قابل تنظیم:
+- **Email** - ایمیل حساب Cloudflare
+- **Global API Key** - کلید API کلی
+- **Account ID** - شناسه حساب
+- **API Token** - توکن اختصاصی
+- **UsageAPI Address** - آدرس سرویس خارجی
+
+---
+
+## 🔄 پیکربندی تبدیل اشتراک
+
+سیستم تبدیل اشتراک برای تبدیل لینک‌ها به فرمت‌های مختلف استفاده می‌شود:
+
+### ⚙️ تنظیمات اصلی:
+
+| تنظیم | توضیحات | پیش‌فرض |
+|-------|---------|----------|
+| **SUBAPI** | آدرس سرور تبدیل | SUBAPI.cmliussss.net |
+| **SUBCONFIG** | فایل کانفیگ | ACL4SSR_Online_Mini_MultiMode_CF |
+| **EMOJI** | افزودن شکلک | غیرفعال |
+
+### 🌐 فرمت‌های پشتیبانی شده:
+- **Clash** - برای کلاینت‌های Clash
+- **Sing-box** - برای Sing-box
+- **Surge** - برای Surge
+- **Quantumult** - برای Quantumult
+- **Loon** - برای Loon
+- **Mixed** - ترکیبی (پیش‌فرض)
+
+### 📁 کانفیگ‌های موجود:
+```
+ACL4SSR_Online_Mini_MultiMode_CF.ini (پیشنهادی)
+ACL4SSR_Online_Mini_MultiMode.ini
+```
+
+---
+
+## 📊 منابع و لینک‌های GitHub
+
+### 📁 IP های Cloudflare
+```
+https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/CF-CIDR.txt
+https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/CF-CIDR/cmcc.txt
+https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/CF-CIDR/cu.txt
+https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/CF-CIDR/ct.txt
+```
+
+### ⚙️ کانفیگ Subconverter
+```
+https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online_Mini_MultiMode_CF.ini
+https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Mini_MultiMode.ini
+```
+
+### 🛠️ ابزارهای Nova
+```
+https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/SUBCONFIG.json
+https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/SUBAPI.json
+https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/json/edt-path-config.json
+https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/socks5.json
+https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/http.json
+```
+
+### 🌐 ASN/IP
+```
+https://raw.githubusercontent.com/ipverse/asn-ip/master/as/13335/ipv4-aggregated.txt
+https://raw.githubusercontent.com/ipverse/asn-ip/master/as/209242/ipv4-aggregated.txt
+```
 
 ---
 
 ## 🙏 تشکر و قدردانی
 
+- [IRNova/Tools](https://github.com/IRNova/Tools) - ابزارها و منابع IP
+- [cmliu](https://github.com/cmliu) - منابع IP و API
+- [ACL4SSR](https://github.com/ACL4SSR) - کانفیگ Subconverter
+- [ipverse](https://github.com/ipverse/asn-ip) - پایگاه داده ASN
+- [Cloudflare](https://cloudflare.com) - زیرساخت Workers
 
 ---
 
@@ -211,6 +371,23 @@ SOCKS5=username:password@host:port
 
 ---
 
+## 📞 ارتباط
+
 <p align="center">
-  <a href="https://github.com/IRNova/Nova-Vless">🌟 Star us on GitHub</a>
+  <a href="https://github.com/IRNova/Nova-Proxy">
+    <img src="https://img.shields.io/badge/GitHub-گیتهاب-0ea5e9?style=for-the-badge&logo=github" alt="GitHub">
+  </a>
+  <a href="https://t.me/irnova_proxy">
+    <img src="https://img.shields.io/badge/Telegram-تلگرام-0ea5e9?style=for-the-badge&logo=telegram" alt="Telegram Channel">
+  </a>
+</p>
+
+<p align="center">
+  برای دیدن آخرین تغییرات و پروژه‌های بیشتر حتماً عضو کانال ما شوید
+</p>
+
+---
+
+<p align="center">
+  <strong>نسخه 1.0.0 - در حال توسعه | با ❤️ برای جامعه ایران</strong>
 </p>
