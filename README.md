@@ -202,9 +202,6 @@ SOCKS5=username:password@host:port
 
 ## 🙏 تشکر و قدردانی
 
-- [cmliu](https://github.com/cmliu) - منابع IP و API
-- [ACL4SSR](https://github.com/ACL4SSR) - کانفیگ Subconverter
-- [Cloudflare](https://cloudflare.com) - زیرساخت Workers
 
 ---
 
