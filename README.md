@@ -74,10 +74,7 @@
 
 ```
 ADMIN = رمز_عبور_شما
-KEY = کلید_امنیتی
-UUID = (اختیاری) UUID دلخواه
 KV = namespace-name
-HOST = دامنه_شما
 ```
 
 ### ۳. ایجاد KV Namespace
