@@ -1,3 +1,19 @@
+<html dir="rtl" lang="fa">
+<head>
+<meta charset="UTF-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    line-height: 1.8;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+</style>
+</head>
+<body>
+
 # پنل Nova-Vless
 
 > ⚡ پنل مدیریت VLESS برای Cloudflare Workers
@@ -275,3 +291,6 @@ ECH با رمزنگاری SNI این مشکل را حل می‌کند:
 <p align="center">
   <strong>نسخه 1.0.0 - در حال توسعه | با ❤️ برای جامعه ایران</strong>
 </p>
+
+</body>
+</html>
