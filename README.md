@@ -35,7 +35,6 @@
 ### 🖥️ پنل مدیریت
 - تنظیمات کامل از طریق وب
 - بهینه‌سازی آنلاین IP
-- نمایش آمار استفاده Cloudflare
 - تنظیمات سفارشی IP
 
 ### 📱 امکانات اضافی
@@ -94,11 +93,6 @@ HOST = دامنه_شما
 
 ## 📖 راهنمای استفاده
 
-### 🔗 دریافت اشتراک
-
-```
-https://your-domain/sub?token=TOKEN
-```
 
 پارامترهای اضافی:
 - `&target=clash` - فرمت Clash
@@ -131,43 +125,7 @@ https://your-domain/login
 
 ---
 
-## 📁 ساختار فایل‌ها
 
-```
-SFSD/
-├── nvless.js           # کد اصلی Worker
-├── index.html          # صفحه اصلی
-├── admin/
-│   ├── index.html      # پنل مدیریت
-│   ├── config.json     # تنظیمات پیش‌فرض
-│   └── log.json        # لاگ‌ها
-├── login/index.html    # صفحه ورود
-├── noKV/index.html    # خطای عدم وجود KV
-├── noADMIN/index.html # خطای عدم وجود ADMIN
-├── cdn-cgi/trace      # فایل Trace
-└── sub/               # مسیر اشتراک
-```
-
----
-
-## ⚙️ تنظیمات پیش‌فرض
-
-```json
-{
-  "协议类型": "vless",
-  "传输协议": "ws",
-  "Fingerprint": "chrome",
-  "TLS分片": "Shadowrocket",
-  "随机路径": false,
-  "ECH": false,
-  "优选订阅生成": {
-    "local": true,
-    "SUBNAME": "Nova-Vless"
-  }
-}
-```
-
----
 
 ## 🔧 تنظیمات پیشرفته
 
@@ -193,7 +151,7 @@ SOCKS5=username:password@host:port
 ### 🏠 روش ۱: حالت محلی (Local)
 این روش پیش‌فرض است و IP های Cloudflare را از GitHub دریافت می‌کند:
 - IP های رسمی Cloudflare (از IRNova/Tools)
-- پشتیبانی از اپراتورهای چین (CMCC, CU, CT)
+- پشتیبانی از اپراتورهای  (CMCC, CU, CT)
 - تولید تصادفی IP از رنج‌های موجود
 - **نام نودها**: به صورت تصادفی با پیشوند `Nova-` و کد 5 کاراکتری
 
@@ -202,12 +160,7 @@ SOCKS5=username:password@host:port
 - می‌توانید هر SUB API معتبر را وارد کنید
 - مثلاً: `https://subapi.example.com`
 - سیستم به طور خودکار لینک‌ها را پردازش می‌کند
-
-### 📝 روش ۳: IP های سفارشی (ADD.txt)
-افزودن IP های دستی:
-- در پنل admin بخش "IP های سفارشی"
-- یا فایل `ADD.txt` در KV
-- فرمت: `IP:پورت#نام|زمان|تاخیر`
+`
 
 ---
 
@@ -266,32 +219,6 @@ ECH با رمزنگاری SNI این مشکل را حل می‌کند:
 
 ---
 
-## 🌐 تنظیمات دسترسی Cloudflare CDN
-
-این بخش برای نمایش و مدیریت مصرف منابع Cloudflare استفاده می‌شود:
-
-### 📊 اطلاعات قابل نمایش:
-- **مصرف Workers** - تعداد درخواست‌ها
-- **مصرف Pages** - ترافیک Pages
-- **مجموع مصرف** - کل منابع استفاده شده
-- **سهمیه روزانه** - حد مجاز روزانه
-
-### 🔑 روش‌های دریافت اطلاعات:
-
-| روش | توضیحات | نیازمندی |
-|-----|---------|-----------|
-| API مستقیم | استفاده از Cloudflare API | Email + Global API Key |
-| Token | استفاده از API Token | Cloudflare API Token |
-| UsageAPI | استفاده از سرویس خارجی | آدرس UsageAPI |
-
-### ⚙️ فیلدهای قابل تنظیم:
-- **Email** - ایمیل حساب Cloudflare
-- **Global API Key** - کلید API کلی
-- **Account ID** - شناسه حساب
-- **API Token** - توکن اختصاصی
-- **UsageAPI Address** - آدرس سرویس خارجی
-
----
 
 ## 🔄 پیکربندی تبدیل اشتراک
 
@@ -319,32 +246,8 @@ ACL4SSR_Online_Mini_MultiMode_CF.ini (پیشنهادی)
 ACL4SSR_Online_Mini_MultiMode.ini
 ```
 
----
 
-## 📊 منابع و لینک‌های GitHub
 
-### 📁 IP های Cloudflare
-```
-https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/CF-CIDR.txt
-https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/CF-CIDR/cmcc.txt
-https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/CF-CIDR/cu.txt
-https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/CF-CIDR/ct.txt
-```
-
-### ⚙️ کانفیگ Subconverter
-```
-https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online_Mini_MultiMode_CF.ini
-https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Mini_MultiMode.ini
-```
-
-### 🛠️ ابزارهای Nova
-```
-https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/SUBCONFIG.json
-https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/SUBAPI.json
-https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/json/edt-path-config.json
-https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/socks5.json
-https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/http.json
-```
 
 ### 🌐 ASN/IP
 ```
@@ -357,7 +260,6 @@ https://raw.githubusercontent.com/ipverse/asn-ip/master/as/209242/ipv4-aggregate
 ## 🙏 تشکر و قدردانی
 
 - [IRNova/Tools](https://github.com/IRNova/Tools) - ابزارها و منابع IP
-- [cmliu](https://github.com/cmliu) - منابع IP و API
 - [ACL4SSR](https://github.com/ACL4SSR) - کانفیگ Subconverter
 - [ipverse](https://github.com/ipverse/asn-ip) - پایگاه داده ASN
 - [Cloudflare](https://cloudflare.com) - زیرساخت Workers
